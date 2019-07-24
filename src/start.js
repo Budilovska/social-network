@@ -18,15 +18,3 @@ if (location.pathname == "/welcome") {
 ReactDOM.render(elem, document.querySelector("main"));
 
 //this function can render only one component. To render several components, we need to create container component, that takes all components and then pass it here to render one container component. (App.js)
-
-// ReactDOM.render(<App />, document.querySelector("main"));
-//
-//
-// export default function HelloWorld() {
-//     return (
-//         <div>
-//             <h1>My first component :)</h1>
-//             <p>woooooooooooooo</p>
-//         </div>
-//     );
-// }

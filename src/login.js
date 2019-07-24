@@ -1,8 +1,8 @@
 import React from "react";
 import axios from "./axios";
-import { Link } from "react-router-dom"; //this is for making links to our router
+import { Link } from "react-router-dom";
 
-export default class Registration extends React.Component {
+export default class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
@@ -14,46 +14,37 @@ export default class Registration extends React.Component {
             [e.target.name]: e.target.value
         });
     }
-    //------------------ handling submit registration ------------
+    //------------------ handling login button ------------
 
-    submit(e) {
+    login(e) {
         axios
-            .post("/welcome/", {
-                first: this.state.first,
-                last: this.state.last,
+            .post("/login", {
                 email: this.state.email,
                 password: this.state.password
             })
             .then(({ data }) => {
-                if (data.success) {
+                console.log(data.didMatch);
+                if (data.didMatch) {
                     location.replace("/");
-                    //user is now logged in, added cookie with userId
                 } else {
                     this.setState({
                         error: true
                     });
                 }
-                console.log("data", data.success);
             })
             .catch(function(err) {
-                console.log("err in POST /welcome", err);
+                console.log("err in POST /login", err);
             });
     }
 
     render() {
         return (
             <div>
-                {this.state.error && <div className="error">Ooops!</div>}
-                <input
-                    name="first"
-                    placeholder="first"
-                    onChange={e => this.handleChange(e)}
-                />
-                <input
-                    name="last"
-                    placeholder="last"
-                    onChange={e => this.handleChange(e)}
-                />
+                {this.state.error && (
+                    <div className="error">
+                        Something went wrong! Try again or register.
+                    </div>
+                )}
                 <input
                     name="email"
                     placeholder="email"
@@ -64,14 +55,8 @@ export default class Registration extends React.Component {
                     placeholder="password"
                     onChange={e => this.handleChange(e)}
                 />
-                <button onClick={e => this.submit()}>register</button>
-                <p>
-                    Already have an account?
-                    <Link to="/login">Log in</Link>
-                </p>
+                <button onClick={e => this.login()}>Log in</button>
             </div>
         );
     }
 }
-
-// <Link to="/login">Log in</Link>
