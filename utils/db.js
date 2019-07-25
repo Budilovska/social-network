@@ -19,3 +19,17 @@ exports.getPassword = function(email) {
         email
     ]);
 };
+
+exports.getUserInfo = function(id) {
+    return db.query(
+        "SELECT first, last, image, bio FROM users WHERE users.id=$1",
+        [id]
+    );
+};
+
+exports.insertImage = function(url, id) {
+    return db.query(
+        "UPDATE users SET image=$1 WHERE users.id=$2 RETURNING image",
+        [url, id]
+    );
+};

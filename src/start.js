@@ -3,16 +3,17 @@ import ReactDOM from "react-dom";
 // import AnimalsContainer from "./AnimalsContainer";
 // import App from "./App";
 
-import Welcome from "./welcome"; //create it and put in src folder
-
+import Welcome from "./welcome"; //create it and put in s
+//rc folder
+import App from "./app";
 let elem;
 
 if (location.pathname == "/welcome") {
-    //they are logged out
+    //user is logged out
     elem = <Welcome />;
 } else {
-    elem = <img id="logo" src="puppy.png" />;
-    //they are logged in
+    elem = <App />;
+    //user is logged in
 }
 
 ReactDOM.render(elem, document.querySelector("main"));
