@@ -1,9 +1,18 @@
 #logo {
-    width: 150px;
+    width: 7rem;
 }
 
 .uploader {
     width: 400px;
     height: 200px;
     background-color: LightGray;
+}
+
+#avatar {
+    width: 7rem;
+    float: right;
+}
+
+header {
+
 }

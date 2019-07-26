@@ -11,7 +11,6 @@ export default class App extends React.Component {
         };
     }
     //componentDidMount will pass info to Avatar component
-    //componentDidMount will pass info to Avatar component
     async componentDidMount() {
         console.log("mounted");
         try {
@@ -25,22 +24,29 @@ export default class App extends React.Component {
     render() {
         return (
             <div>
-                <img id="logo" src="puppy.png" alt="logo" />
-                <Avatar
-                    image={this.state.image}
-                    first={this.state.first}
-                    last={this.state.last}
-                    onClick={() =>
-                        this.setState({
-                            uploaderIsVisible: true
-                        })
-                    }
-                />
+                <header>
+                    <img id="logo" src="puppy.png" alt="logo" />
+                    <Avatar
+                        image={this.state.image}
+                        first={this.state.first}
+                        last={this.state.last}
+                        onClick={() =>
+                            this.setState({
+                                uploaderIsVisible: true
+                            })
+                        }
+                    />
+                </header>
                 {this.state.uploaderIsVisible && (
                     <Uploader
                         setImg={data =>
                             this.setState({
                                 image: data,
+                                uploaderIsVisible: false
+                            })
+                        }
+                        closeUploader={() =>
+                            this.setState({
                                 uploaderIsVisible: false
                             })
                         }

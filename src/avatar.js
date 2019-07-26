@@ -2,7 +2,14 @@ import React from "react";
 
 export default function({ image, first, last, onClick }) {
     image = image || "default-avatar.jpg";
-    return <img src={image} alt={`${first} ${last}`} onClick={onClick} />;
+    return (
+        <img
+            id="avatar"
+            src={image}
+            alt={`${first} ${last}`}
+            onClick={onClick}
+        />
+    );
 }
 
 //avatar makes uploader appear

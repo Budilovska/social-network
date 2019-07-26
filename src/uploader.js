@@ -29,7 +29,12 @@ export default class Uploader extends React.Component {
     render() {
         return (
             <div className="uploader">
-                <h4>X</h4>
+                <h4
+                    id="closeUploader"
+                    onClick={() => this.props.closeUploader()}
+                >
+                    X
+                </h4>
                 <h3>Want to change your profile picture?</h3>
                 <input
                     name="file"
