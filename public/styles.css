@@ -2,17 +2,32 @@
     width: 7rem;
 }
 
+.wraps-all {
+    height: 100vh;
+    width: 100%;
+}
+
 .uploader {
     width: 400px;
     height: 200px;
     background-color: LightGray;
+    float: right;
 }
 
-#avatar {
+.avatar {
     width: 7rem;
     float: right;
 }
 
 header {
+    border: 2px solid pink;
+}
 
+.main-container {
+    /* border: 2px solid yellow; */
+}
+
+.profile-avatar img {
+    float: left;
+    width: 17rem;
 }

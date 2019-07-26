@@ -2,6 +2,8 @@ import React from "react";
 import Uploader from "./uploader";
 import Avatar from "./avatar";
 import axios from "./axios";
+import Profile from "./profile";
+import Bioeditor from "./bioeditor";
 
 export default class App extends React.Component {
     constructor(props) {
@@ -21,9 +23,10 @@ export default class App extends React.Component {
             console.log("err in GET /user", err);
         }
     }
+
     render() {
         return (
-            <div>
+            <div className="wraps-all">
                 <header>
                     <img id="logo" src="puppy.png" alt="logo" />
                     <Avatar
@@ -37,21 +40,53 @@ export default class App extends React.Component {
                         }
                     />
                 </header>
-                {this.state.uploaderIsVisible && (
-                    <Uploader
-                        setImg={data =>
-                            this.setState({
-                                image: data,
-                                uploaderIsVisible: false
-                            })
+                <section className="main-container">
+                    <Profile
+                        first={this.state.first}
+                        last={this.state.last}
+                        bio={this.state.bio}
+                        avatar={
+                            <Avatar
+                                id={this.state.id}
+                                first={this.state.first}
+                                last={this.state.last}
+                                image={this.state.image}
+                                onClick={() =>
+                                    this.setState({
+                                        uploaderIsVisible: true
+                                    })
+                                }
+                            />
                         }
-                        closeUploader={() =>
-                            this.setState({
-                                uploaderIsVisible: false
-                            })
+                        bioeditor={
+                            <Bioeditor
+                                bio={this.state.bio}
+                                // setBio={this.setBio}
+                                setBio={data =>
+                                    this.setState({
+                                        bio: data
+                                    })
+                                }
+                            />
                         }
                     />
-                )}
+
+                    {this.state.uploaderIsVisible && (
+                        <Uploader
+                            setImg={data =>
+                                this.setState({
+                                    image: data,
+                                    uploaderIsVisible: false
+                                })
+                            }
+                            closeUploader={() =>
+                                this.setState({
+                                    uploaderIsVisible: false
+                                })
+                            }
+                        />
+                    )}
+                </section>
             </div>
         );
     }

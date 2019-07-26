@@ -4,7 +4,7 @@ export default function({ image, first, last, onClick }) {
     image = image || "default-avatar.jpg";
     return (
         <img
-            id="avatar"
+            className="avatar"
             src={image}
             alt={`${first} ${last}`}
             onClick={onClick}

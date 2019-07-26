@@ -117,10 +117,18 @@ app.post("/upload", uploader.single("file"), s3.upload, async (req, res) => {
     const url = config.s3Url + req.file.filename;
     try {
         const result = await db.insertImage(url, req.session.userId);
-        console.log("INSERT IMG:", result.rows[0].image);
         res.json(result.rows[0].image);
     } catch (err) {
         console.log("err in POST /upload", err);
+    }
+});
+//------------------adding bio to database-------------------------
+app.post("/bio", async (req, res) => {
+    try {
+        const result = await db.addBio(req.session.userId, req.body.draftBio);
+        res.json(result.rows[0].bio);
+    } catch (err) {
+        console.log("err in POST /bio", err);
     }
 });
 
