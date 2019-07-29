@@ -1,6 +1,4 @@
 import React from "react";
-// import Avatar from "./avatar";
-// import Bioeditor from "./bioeditor";
 
 export default function Profile(props) {
     return (

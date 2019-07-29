@@ -4,6 +4,8 @@ import Avatar from "./avatar";
 import axios from "./axios";
 import Profile from "./profile";
 import Bioeditor from "./bioeditor";
+import OtherProfile from "./otherProfile";
+import { Route, BrowserRouter, Link } from "react-router-dom";
 
 export default class App extends React.Component {
     constructor(props) {
@@ -14,7 +16,7 @@ export default class App extends React.Component {
     }
     //componentDidMount will pass info to Avatar component
     async componentDidMount() {
-        console.log("mounted");
+        // console.log("mounted");
         try {
             const { data } = await axios.get("/user");
             // console.log("data", data);
@@ -28,7 +30,7 @@ export default class App extends React.Component {
         return (
             <div className="wraps-all">
                 <header>
-                    <img id="logo" src="puppy.png" alt="logo" />
+                    <img id="logo" src="/puppy.png" alt="logo" />
                     <Avatar
                         image={this.state.image}
                         first={this.state.first}
@@ -41,35 +43,55 @@ export default class App extends React.Component {
                     />
                 </header>
                 <section className="main-container">
-                    <Profile
-                        first={this.state.first}
-                        last={this.state.last}
-                        bio={this.state.bio}
-                        avatar={
-                            <Avatar
-                                id={this.state.id}
-                                first={this.state.first}
-                                last={this.state.last}
-                                image={this.state.image}
-                                onClick={() =>
-                                    this.setState({
-                                        uploaderIsVisible: true
-                                    })
-                                }
+                    <BrowserRouter>
+                        <div>
+                            <Route
+                                exact
+                                path="/"
+                                render={() => (
+                                    <Profile
+                                        first={this.state.first}
+                                        last={this.state.last}
+                                        bio={this.state.bio}
+                                        avatar={
+                                            <Avatar
+                                                id={this.state.id}
+                                                first={this.state.first}
+                                                last={this.state.last}
+                                                image={this.state.image}
+                                                onClick={() =>
+                                                    this.setState({
+                                                        uploaderIsVisible: true
+                                                    })
+                                                }
+                                            />
+                                        }
+                                        bioeditor={
+                                            <Bioeditor
+                                                bio={this.state.bio}
+                                                // setBio={this.setBio}
+                                                setBio={data =>
+                                                    this.setState({
+                                                        bio: data
+                                                    })
+                                                }
+                                            />
+                                        }
+                                    />
+                                )}
                             />
-                        }
-                        bioeditor={
-                            <Bioeditor
-                                bio={this.state.bio}
-                                // setBio={this.setBio}
-                                setBio={data =>
-                                    this.setState({
-                                        bio: data
-                                    })
-                                }
+                            <Route
+                                path="/user/:id"
+                                render={props => (
+                                    <OtherProfile
+                                        key={props.match.url}
+                                        match={props.match}
+                                        history={props.history}
+                                    />
+                                )}
                             />
-                        }
-                    />
+                        </div>
+                    </BrowserRouter>
 
                     {this.state.uploaderIsVisible && (
                         <Uploader

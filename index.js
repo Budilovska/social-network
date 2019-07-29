@@ -122,7 +122,7 @@ app.post("/upload", uploader.single("file"), s3.upload, async (req, res) => {
         console.log("err in POST /upload", err);
     }
 });
-//------------------adding bio to database-------------------------
+///------------------adding bio to database------------------
 app.post("/bio", async (req, res) => {
     try {
         const result = await db.addBio(req.session.userId, req.body.draftBio);
@@ -132,7 +132,28 @@ app.post("/bio", async (req, res) => {
     }
 });
 
-//-------------- Do not delete this!!! ----------------------------
+//------------------getting other user ------------------
+app.get("/user/:id.json", async (req, res) => {
+    try {
+        if (req.params.id == req.session.userId) {
+            throw new Error("same user");
+        }
+        const result = await db.getUserInfo(req.params.id);
+        if (result.rows.length == 0) {
+            res.json({
+                noUser: true
+            });
+        }
+        res.json(result.rows[0]);
+    } catch (err) {
+        console.log("err in get /user/id", err);
+        res.json({
+            sameUser: true
+        });
+    }
+});
+
+///-------------- Do not delete this!!! ---------------------
 //this route has to be after all get routes.
 app.get("*", function(req, res) {
     if (!req.session.userId && req.url != "/welcome") {

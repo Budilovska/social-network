@@ -1,6 +1,26 @@
+
+
 #logo {
     width: 7rem;
 }
+
+#brief-me {
+font-family: 'Montserrat', sans-serif;
+font-size: 220px;
+margin: 0;
+z-index: 1;
+-webkit-text-fill-color: transparent;
+/* -webkit-text-stroke: 1px black; */
+-webkit-background-clip: text;
+background-image: url(crew.jpg);
+}
+
+svg {
+	width: 6em; height: 1.5em;
+	font: 900 500%/1.2 'Arial Black', sans-serif;
+}
+
+text { fill: url(frida.jpg); }
 
 .wraps-all {
     height: 100vh;
