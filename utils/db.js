@@ -40,3 +40,11 @@ exports.addBio = function(id, bio) {
         bio
     ]);
 };
+
+exports.latestUsers = function() {
+    return db.query("SELECT * FROM users ORDER BY id DESC LIMIT 3");
+};
+
+exports.searchUser = function(val) {
+    return db.query("SELECT * FROM users WHERE first ILIKE $1", [val + "%"]);
+};

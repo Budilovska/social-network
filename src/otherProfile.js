@@ -11,7 +11,7 @@ export default class OtherProfile extends React.Component {
         try {
             const id = this.props.match.params.id;
             const { data } = await axios.get(`/user/${id}.json`);
-            console.log("data", data);
+            // console.log("data", data);
             if (data.sameUser) {
                 this.props.history.push("/");
             } else if (data.noUser) {

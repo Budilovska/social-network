@@ -153,6 +153,31 @@ app.get("/user/:id.json", async (req, res) => {
     }
 });
 
+//------------------getting last 3 users --------------------
+
+app.get("/users.json", async (req, res) => {
+    try {
+        const result = await db.latestUsers();
+        // console.log(result.rows);
+        res.json(result.rows);
+    } catch (err) {
+        console.log("err in GET /users", err);
+    }
+});
+
+//------------------searching users --------------------
+
+app.get("/search/:val.json", async (req, res) => {
+    try {
+        console.log();
+        const result = await db.searchUser(req.params.val);
+        console.log(result.rows);
+        res.json(result.rows);
+    } catch (err) {
+        console.log("err in GET /users", err);
+    }
+});
+
 ///-------------- Do not delete this!!! ---------------------
 //this route has to be after all get routes.
 app.get("*", function(req, res) {

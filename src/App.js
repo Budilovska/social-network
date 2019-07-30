@@ -5,6 +5,7 @@ import axios from "./axios";
 import Profile from "./profile";
 import Bioeditor from "./bioeditor";
 import OtherProfile from "./otherProfile";
+import FindPeople from "./findPeople";
 import { Route, BrowserRouter, Link } from "react-router-dom";
 
 export default class App extends React.Component {
@@ -89,6 +90,10 @@ export default class App extends React.Component {
                                         history={props.history}
                                     />
                                 )}
+                            />
+                            <Route
+                                path="/users"
+                                render={props => <FindPeople />}
                             />
                         </div>
                     </BrowserRouter>
