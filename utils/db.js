@@ -48,3 +48,31 @@ exports.latestUsers = function() {
 exports.searchUser = function(val) {
     return db.query("SELECT * FROM users WHERE first ILIKE $1", [val + "%"]);
 };
+
+exports.checkFriendship = function(sender_id, receiver_id) {
+    return db.query(
+        "SELECT * FROM friendships WHERE (sender_id = $1 AND receiver_id = $2) OR (sender_id = $2 AND receiver_id = $1);",
+        [sender_id, receiver_id]
+    );
+};
+
+exports.sendFriendRequest = function(sender_id, receiver_id) {
+    return db.query(
+        "INSERT INTO friendships (sender_id, receiver_id) VALUES ($1, $2) RETURNING *",
+        [sender_id, receiver_id]
+    );
+};
+
+exports.acceptFriendRequest = function(sender_id, receiver_id) {
+    return db.query(
+        "UPDATE friendships SET accepted = true WHERE sender_id = $1 AND receiver_id = $2 RETURNING *",
+        [sender_id, receiver_id]
+    );
+};
+
+exports.deleteFriend = function(sender_id, receiver_id) {
+    return db.query(
+        "DELETE FROM friendships WHERE (sender_id = $1 AND receiver_id = $2) OR (sender_id = $2 AND receiver_id = $1);",
+        [sender_id, receiver_id]
+    );
+};

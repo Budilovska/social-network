@@ -70,7 +70,6 @@ export default class App extends React.Component {
                                         bioeditor={
                                             <Bioeditor
                                                 bio={this.state.bio}
-                                                // setBio={this.setBio}
                                                 setBio={data =>
                                                     this.setState({
                                                         bio: data

@@ -178,6 +178,61 @@ app.get("/search/:val.json", async (req, res) => {
     }
 });
 
+//------------------ check friendship ------------------------
+app.get("/friendship/:othProfId", async (req, res) => {
+    try {
+        const result = await db.checkFriendship(
+            req.session.userId,
+            req.params.othProfId
+        );
+        if (result.rows.length == 0) {
+            res.json({ buttonText: "Add friend" });
+        } else if (result.rows[0].accepted) {
+            res.json({ buttonText: "Unfriend" });
+        } else if (result.rows[0].sender_id == req.params.othProfId) {
+            res.json({ buttonText: "Accept friend request" });
+        } else {
+            res.json({ buttonText: "Cancel friend request" });
+        }
+
+        // res.json(result.rows[0]);
+    } catch (err) {
+        console.log("err in GET /frienship", err);
+    }
+});
+
+//------------------ send friend request ------------------------
+app.post("/friendship/:othProfId", async (req, res) => {
+    try {
+        console.log(req.body.button);
+        if (req.body.button == "Add friend") {
+            const result = await db.sendFriendRequest(
+                req.session.userId,
+                req.params.othProfId
+            );
+            // console.log("accepted", result.rows);
+            res.json({ buttonText: "Cancel friend request" });
+        } else if (req.body.button == "Accept friend request") {
+            const results = await db.acceptFriendRequest(
+                req.params.othProfId,
+                req.session.userId
+            );
+            res.json({ buttonText: "Unfriend" });
+        } else if (
+            req.body.button == "Unfriend" ||
+            req.body.button == "Cancel friend request"
+        ) {
+            const results = await db.deleteFriend(
+                req.params.othProfId,
+                req.session.userId
+            );
+            res.json({ buttonText: "Add friend" });
+        }
+    } catch (err) {
+        console.log("err in GET /frienship", err);
+    }
+});
+
 ///-------------- Do not delete this!!! ---------------------
 //this route has to be after all get routes.
 app.get("*", function(req, res) {
