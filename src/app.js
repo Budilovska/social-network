@@ -1,0 +1,128 @@
+import React from "react";
+import Uploader from "./uploader";
+import Avatar from "./avatar";
+import axios from "./axios";
+import Profile from "./profile";
+import Bioeditor from "./bioeditor";
+import OtherProfile from "./otherProfile";
+import FindPeople from "./findPeople";
+import Friends from "./friends";
+import { Route, BrowserRouter, Link } from "react-router-dom";
+
+export default class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            uploaderIsVisible: false
+        };
+    }
+    //componentDidMount will pass info to Avatar component
+    async componentDidMount() {
+        // console.log("mounted");
+        try {
+            const { data } = await axios.get("/user");
+            // console.log("data", data);
+            this.setState(data);
+        } catch (err) {
+            console.log("err in GET /user", err);
+        }
+    }
+
+    render() {
+        return (
+            <div className="wraps-all">
+                <header>
+                    <h1 className="brief-me" id="small-logo">
+                        Brief.me
+                    </h1>
+                    <Avatar
+                        image={this.state.image}
+                        first={this.state.first}
+                        last={this.state.last}
+                        onClick={() =>
+                            this.setState({
+                                uploaderIsVisible: true
+                            })
+                        }
+                    />
+                </header>
+                <section className="main-container">
+                    <BrowserRouter>
+                        <div>
+                            <Route
+                                exact
+                                path="/"
+                                render={() => (
+                                    <Profile
+                                        first={this.state.first}
+                                        last={this.state.last}
+                                        bio={this.state.bio}
+                                        avatar={
+                                            <Avatar
+                                                id={this.state.id}
+                                                first={this.state.first}
+                                                last={this.state.last}
+                                                image={this.state.image}
+                                                onClick={() =>
+                                                    this.setState({
+                                                        uploaderIsVisible: true
+                                                    })
+                                                }
+                                            />
+                                        }
+                                        bioeditor={
+                                            <Bioeditor
+                                                bio={this.state.bio}
+                                                setBio={data =>
+                                                    this.setState({
+                                                        bio: data
+                                                    })
+                                                }
+                                            />
+                                        }
+                                    />
+                                )}
+                            />
+                            <Route
+                                path="/user/:id"
+                                render={props => (
+                                    <OtherProfile
+                                        key={props.match.url}
+                                        match={props.match}
+                                        history={props.history}
+                                    />
+                                )}
+                            />
+                            <Route
+                                path="/users"
+                                render={props => <FindPeople />}
+                            />
+                            <Route
+                                path="/friends"
+                                render={props => <Friends />}
+                            />
+                        </div>
+                    </BrowserRouter>
+
+                    {this.state.uploaderIsVisible && (
+                        <Uploader
+                            setImg={data =>
+                                this.setState({
+                                    image: data,
+                                    uploaderIsVisible: false
+                                })
+                            }
+                            closeUploader={() =>
+                                this.setState({
+                                    uploaderIsVisible: false
+                                })
+                            }
+                        />
+                    )}
+                </section>
+            </div>
+        );
+    }
+}
+
+//

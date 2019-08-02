@@ -237,6 +237,17 @@ app.post("/friendship/:othProfId", async (req, res) => {
     }
 });
 
+//---------------- Getting all friends------------------------
+app.get("/friends.json", async (req, res) => {
+    try {
+        const friends = await db.getFriendsList(req.session.userId);
+        // console.log("friends", friends);
+        res.json(friends.rows);
+    } catch (err) {
+        console.log("err in GET /friends", err);
+    }
+});
+
 ///-------------- Do not delete this!!! ---------------------
 //this route has to be after all get routes.
 app.get("*", function(req, res) {
