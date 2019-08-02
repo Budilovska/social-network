@@ -42,7 +42,11 @@ export default class Registration extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="welcome-fields">
+                <div className="buttons">
+                    <p className="fake-link">Register</p>
+                    <Link className="login-link" to="/login">Log in</Link>
+                </div>
                 {this.state.error && <div className="error">Ooops!</div>}
                 <input
                     name="first"
@@ -64,11 +68,7 @@ export default class Registration extends React.Component {
                     placeholder="password"
                     onChange={e => this.handleChange(e)}
                 />
-                <button onClick={e => this.submit()}>register</button>
-                <p>
-                    Already have an account?
-                    <Link to="/login">Log in</Link>
-                </p>
+                <button className="login-btn" onClick={e => this.submit()}>Go!</button>
             </div>
         );
     }

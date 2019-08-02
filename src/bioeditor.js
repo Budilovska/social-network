@@ -35,7 +35,7 @@ export default class Bioeditor extends React.Component {
     render() {
         return (
             <div>
-                {this.props.bio && (
+                {this.props.bio && !this.state.editing && (
                     <div>
                         <p>{this.props.bio}</p>
                         <button
@@ -59,7 +59,7 @@ export default class Bioeditor extends React.Component {
                         <button onClick={e => this.submit()}>Save</button>
                     </div>
                 )}
-                {!this.props.bio && (
+                {!this.props.bio && !this.state.editing && (
                     <button
                         onClick={e =>
                             this.setState({

@@ -169,15 +169,19 @@ app.get("/users.json", async (req, res) => {
 
 app.get("/search/:val.json", async (req, res) => {
     try {
-        console.log();
         const result = await db.searchUser(req.params.val);
-        console.log(result.rows);
+        // console.log(result.rows);
         res.json(result.rows);
+        // if (result.rows.length == 0) {
+        //     throw new Error("no results");
+        // }
     } catch (err) {
         console.log("err in GET /users", err);
+        res.json({
+            noResults: true
+        });
     }
 });
-
 //------------------ check friendship ------------------------
 app.get("/friendship/:othProfId", async (req, res) => {
     try {

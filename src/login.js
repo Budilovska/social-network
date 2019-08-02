@@ -39,7 +39,11 @@ export default class Login extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="welcome-fields">
+            <div className="buttons">
+                <Link className="login-link" to="/">Register</Link>
+                <p className="fake-link">Log in</p>
+                </div>
                 {this.state.error && (
                     <div className="error">
                         Something went wrong! Try again or register.
@@ -55,7 +59,7 @@ export default class Login extends React.Component {
                     placeholder="password"
                     onChange={e => this.handleChange(e)}
                 />
-                <button onClick={e => this.login()}>Log in</button>
+                <button className="login-btn" onClick={e => this.login()}>Go!</button>
             </div>
         );
     }

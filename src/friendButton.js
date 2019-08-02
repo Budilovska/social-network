@@ -12,7 +12,7 @@ export default function FriendButton(props) {
                 const { data } = await axios.get(
                     `/friendship/${props.otherProfileId}`
                 );
-                // console.log("data", data.buttonText);
+                console.log("data.buttonText", data.buttonText);
                 setButton(data.buttonText);
             } catch (err) {
                 console.log("err in GET /frienship", err);

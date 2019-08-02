@@ -10,14 +10,15 @@ export default class Welcome extends React.Component {
     render() {
         return (
             <HashRouter>
-                <div>
-                    <img id="logo" src="puppy.png" />
-                    <h1 id="brief-me">Brief.me</h1>
-                    <h2>Welcome to our community</h2>
-                    <p>We are here because we are amazing</p>
+                <div className="welcome">
+                <h1 className="brief-me">Brief.me</h1>
+                <h2 id="welcome-h2">We are a community of film and advertising peers</h2>
+                <p id="welcome-p">Share your project, find crew members, land a job, brainstorm together, create</p>
+                <div className="welcome-container">
                     <div>
                         <Route exact path="/" component={Registration} />
                         <Route path="/login" component={Login} />
+                    </div>
                     </div>
                 </div>
             </HashRouter>

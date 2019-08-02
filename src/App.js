@@ -31,7 +31,9 @@ export default class App extends React.Component {
         return (
             <div className="wraps-all">
                 <header>
-                    <img id="logo" src="/puppy.png" alt="logo" />
+                    <h1 className="brief-me" id="small-logo">
+                        Brief.me
+                    </h1>
                     <Avatar
                         image={this.state.image}
                         first={this.state.first}
@@ -92,7 +94,8 @@ export default class App extends React.Component {
                             />
                             <Route
                                 path="/users"
-                                render={props => <FindPeople />}
+                                render={props => <FindPeople
+                                    />}
                             />
                         </div>
                     </BrowserRouter>

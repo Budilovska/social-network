@@ -1,10 +1,24 @@
-
-
-#logo {
-    width: 7rem;
+* {
+    background-color: white;
+    margin: 0;
 }
 
-#brief-me {
+.welcome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.welcome-container {
+    width: 23rem;
+    height: 23rem;
+    background-color: white;
+    /* box-shadow: 0 0 10px gray; */
+    display: grid;
+    grid-template-rows: 20% auto 20%;
+}
+
+.brief-me {
 font-family: 'Montserrat', sans-serif;
 font-size: 220px;
 margin: 0;
@@ -12,15 +26,94 @@ z-index: 1;
 -webkit-text-fill-color: transparent;
 /* -webkit-text-stroke: 1px black; */
 -webkit-background-clip: text;
-background-image: url(crew.jpg);
+background-image: url(/logo-giphy.gif);
 }
 
-svg {
-	width: 6em; height: 1.5em;
-	font: 900 500%/1.2 'Arial Black', sans-serif;
+#welcome-h2 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
 }
 
-text { fill: url(frida.jpg); }
+#welcome-p {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+}
+
+#small-logo {
+    font-size: 3rem;
+}
+
+.welcome-fields {
+    grid-row: 2 / 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input {
+    -webkit-appearance: none;
+   outline: none;
+   border: 1px solid #282828;
+   outline-width: 0;
+   background: transparent;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 18px;
+    margin: 0.5rem;
+    width: 19rem;
+    height: 2rem;
+
+}
+
+.buttons {
+    grid-row: 1 / 2;
+    display: flex;
+    flex-direction: row;
+}
+
+.login-btn {
+    grid-row: 3 / 4;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 18px;
+    width: 19.5rem;
+    height: 2.5rem;
+    background: #282828;
+    color: white;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    margin-top: 1.5rem
+}
+
+.fake-link {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 18px;
+    width: 9rem;
+    /* height: 2.5rem; */
+    background: #282828;
+    color: white;
+    padding: 0.6rem;
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.login-link {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 18px;
+    width: 9rem;
+    height: 1.8rem;
+    background: white;
+    color: #282828;
+    border: 1px solid #282828;
+    padding-top: 0.6rem;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    margin-top: 1.5rem
+}
 
 .wraps-all {
     height: 100vh;
@@ -41,6 +134,11 @@ text { fill: url(frida.jpg); }
 
 header {
     border: 2px solid pink;
+    height: 10rem;
+    display: flex;
+    flex-direction: row;
+    align-content: space-between;
+
 }
 
 .main-container {
