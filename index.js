@@ -6,6 +6,9 @@ const bc = require("./utils/bc");
 const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
 const csurf = require("csurf");
+//----------------------socket.io--------------------------------
+const server = require('http').Server(app);
+const io = require('socket.io')(server, { origins: 'localhost:8080' });
 
 //------------------------has to be above the routes, handles file uploads
 const multer = require("multer");
@@ -99,6 +102,14 @@ app.post("/login", async (req, res) => {
         res.json({ didMatch: false });
     }
 });
+
+//----------------------logout--------------------------------
+app.get("/logout", (req, res) => {
+    req.session = null;
+    res.redirect("/welcome");
+});
+
+//--------------------------------------------------------------
 
 app.get("/user", async (req, res) => {
     try {
@@ -261,9 +272,32 @@ app.get("*", function(req, res) {
 });
 //-----------------------------------------------------------------
 
-app.listen(8080, function() {
-    console.log("I'm listening.");
+// app.listen(8080, function() {
+//     console.log("I'm listening.");
+// });
+
+server.listen(8080, function() {
+    console.log("I'm listening")
 });
 
 //location.href = is the classic way to relocate in the browser
 //
+
+//we pass to this function an object represents a connection between me and client
+io.on('connection', socket => {
+    console.log(`A socket with the id ${socket.id} just connected.`)
+
+//     socket.emit('greeting', {
+//         message: 'hey there'});
+// //when seding message we emit, when listening to the message we do on.
+//
+//     socket.on('niceToBeHere', payload =>
+//         console.log(payload)
+//     );
+// //io sends message to everyone whos connected
+//     io.emit('newPlayer', {});
+
+    socket.on('disconnect', () => {
+    console.log(`A socket with the id ${socket.id} just disconnected.`)
+});
+});

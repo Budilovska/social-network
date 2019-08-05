@@ -18,48 +18,51 @@ export default function Friends() {
         dispatch(getFriends());
     }, []);
 
+
     if (!wannabes) {
         return null;
     }
     return (
-        <div>
-            <div id="wannabes">
-                <p>These people want to be your friends</p>
+        <div className="friends-container">
+            <div className="friends-list">
+            <p className="friend-text">My friend requests</p>
                 {wannabes &&
                     wannabes.map(friend => (
-                        <div key={friend.id}>
+                        <div  className="single-friend" key={friend.id}>
                             <Link to={`/user/${friend.id}`}>
                                 <img
-                                    className="other-avatar"
+                                    className="friends-avatar"
                                     src={friend.image}
                                     alt={`${friend.first} ${friend.last}`}
                                 />
-                                <h2>
+                            </Link>
+                                <h2 className="friends-name">
                                     {friend.first} {friend.last}
                                 </h2>
-                            </Link>
-                            <button onClick={e => dispatch(accept(friend.id))}>
-                                Accept friend request
+
+
+                            <button className="friends-btn" onClick={e => dispatch(accept(friend.id))}>
+                                Accept
                             </button>
-                        </div>
+                            </div>
                     ))}
             </div>
-            <div id="current-friends">
-                <p>These people are currently your friends</p>
+            <div className="friends-list">
+            <p className="friend-text">My friends</p>
                 {friends &&
                     friends.map(friend => (
-                        <div key={friend.id}>
+                        <div className="single-friend" key={friend.id}>
                             <Link to={`/user/${friend.id}`}>
                                 <img
-                                    className="other-avatar"
+                                    className="friends-avatar"
                                     src={friend.image}
                                     alt={`${friend.first} ${friend.last}`}
                                 />
-                                <h2>
+                            </Link>
+                                <h2 className="friends-name">
                                     {friend.first} {friend.last}
                                 </h2>
-                            </Link>
-                            <button
+                            <button className="friends-btn"
                                 onClick={e => dispatch(unfriend(friend.id))}
                             >
                                 Unfriend

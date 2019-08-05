@@ -35,7 +35,7 @@ export default function FriendButton(props) {
 
     return (
         <div>
-            <button onClick={submit}>{button}</button>
+            <button className="bio-btn" onClick={submit}>{button}</button>
         </div>
     );
 }

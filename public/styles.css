@@ -1,5 +1,6 @@
 * {
     background-color: white;
+    box-sizing: border-box;
     margin: 0;
 }
 
@@ -24,7 +25,6 @@ font-size: 220px;
 margin: 0;
 z-index: 1;
 -webkit-text-fill-color: transparent;
-/* -webkit-text-stroke: 1px black; */
 -webkit-background-clip: text;
 background-image: url(/logo-giphy.gif);
 }
@@ -37,11 +37,6 @@ background-image: url(/logo-giphy.gif);
 #welcome-p {
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
-}
-
-#small-logo {
-    font-size: 3rem;
-    float: left;
 }
 
 .welcome-fields {
@@ -91,7 +86,7 @@ input {
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
     font-size: 18px;
-    width: 9rem;
+    width: 9.5rem;
     /* height: 2.5rem; */
     background: #282828;
     color: white;
@@ -104,8 +99,8 @@ input {
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
     font-size: 18px;
-    width: 9rem;
-    height: 1.8rem;
+    width: 9.5rem;
+    height: 2.5rem;
     background: white;
     color: #282828;
     border: 1px solid #282828;
@@ -122,46 +117,52 @@ input {
 }
 
 .uploader {
-    width: 400px;
-    height: 200px;
-    background-color: LightGray;
-    float: right;
-}
-
-.avatar {
-    width: 6.5rem;
-    object-fit: cover;
-    float: right;
+    width: 100%;
+    height: 87%;
+    background-color: black;
+    opacity: 0.8;
+    position: fixed;
+    top: 13%;
 }
 
 header {
-    border: 2px solid pink;
-    height: 7rem;
+    height: 6rem;
+    background-color: #2B2F3C;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.main-container {
-    /* border: 2px solid yellow; */
-}
-
-.profile-avatar img {
-    float: left;
-    width: 17rem;
-}
-
-.other-avatar {
-    width: 10rem;
-    height: 10rem;
+.avatar {
+    width: 5rem;
     object-fit: cover;
+    margin-right: 0.6rem;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+#small-logo {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.7rem;
+    float: left;
+    color: white;
+    background-color: inherit;
+    margin-left: 0.6rem;
+}
+
+.nav-container {
+    background-color: #2B2F3C;
 }
 
 #nav-link {
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
-    font-size: 16px;
+    font-size: 18px;
     margin: 0 15px;
     text-decoration: none;
     position: relative;
-    color: black;
+    color: white;
+    background-color: #2B2F3C;
 }
 
 
@@ -170,10 +171,10 @@ header {
   content: "";
   position: absolute;
   width: 100%;
-  height: 1px;
+  height: 2px;
   bottom: 0;
   left: 0;
-  background-color: #000;
+  background-color: white;
   visibility: hidden;
   -webkit-transform: scaleX(0);
   transform: scaleX(0);
@@ -191,5 +192,148 @@ header {
     display: flex;
     flex-direction: row;
     margin-top: 2rem;
-    /* box-shadow: 0 0 4px gray; */
 }
+
+/* OTHER USER PTOFILE */
+.other-avatar {
+    width: 15rem;
+    height: 15rem;
+    object-fit: cover;
+}
+
+.profile-container {
+    display: flex;
+    flex-direction: row;
+    /* border-bottom: 1px solid pink; */
+}
+
+.profile-avatar img {
+    width: 20rem;
+    height: 20rem;
+    object-fit: cover;
+    margin: 2rem;
+    border-radius: 3px;
+}
+
+.profile-name {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300px;
+    font-size: 40px;
+    margin-top: 1.6rem;
+    margin-left: 2rem;
+}
+
+.bio-text {
+    height: 10rem;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    margin-left: 2rem;
+    margin-top: 2rem;
+    /* border-top: 1px solid #c4c4c4;
+    border-bottom: 1px solid #c4c4c4;
+    border-right: 1px solid #c4c4c4; */
+
+}
+
+.profile-name-bio {
+    display: flex;
+    flex-direction: column;
+}
+
+.bio-btn {
+    padding: 0;
+    margin-left: 2rem;
+    margin-top: 2rem;
+    height: 2.5rem;
+    width: 14rem;
+    text-align: center;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    border-radius: 3px;
+    border: none;
+    cursor: pointer;
+     background-image: linear-gradient(to right, #ffecd2 0%, #fcb69f 51%, #ffecd2 100%);
+}
+
+.bio-btn:hover {
+    background-position: right center;
+}
+
+.textarea {
+    display: flex;
+    flex-direction: column;
+}
+
+textarea {
+    height: 10rem;
+    width: 8.9rem;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    margin-left: 2rem;
+    margin-top: 2rem;
+}
+
+.friends-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.friends-list {
+    display: grid;
+    grid-auto-rows: 2rem 20rem;
+    justify-content: start;
+    grid-column-gap: 2.5rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    width: 90%;
+    border-top: 2px solid magenta;
+    overflow-y: scroll;
+}
+
+.friend-text {
+    grid-row: 1/2;
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+}
+
+.single-friend {
+ grid-row: 2/3;
+}
+
+.friends-info {
+    display: flex;
+    flex-direction: row;
+}
+
+.friends-avatar {
+    height: 10rem;
+    width: 10rem;
+    object-fit: cover;
+    margin: 0.5rem;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.friends-name {
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    font-weight: 200;
+}
+
+/* .friends-btn {
+  cursor: pointer;
+  font-size:16px;
+  font-weight: 400;
+  line-height: 45px;
+  margin: 0 0 2em;
+  max-width: 160px;
+  position: relative;
+  text-decoration: none;
+  border: none;
+  width: 100%;
+} */

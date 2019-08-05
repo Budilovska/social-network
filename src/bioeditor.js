@@ -37,8 +37,8 @@ export default class Bioeditor extends React.Component {
             <div>
                 {this.props.bio && !this.state.editing && (
                     <div>
-                        <p>{this.props.bio}</p>
-                        <button
+                        <p className="bio-text">{this.props.bio}</p>
+                        <button className="bio-btn"
                             onClick={e =>
                                 this.setState({
                                     editing: true
@@ -51,16 +51,18 @@ export default class Bioeditor extends React.Component {
                 )}
 
                 {this.state.editing && (
-                    <div>
+                    <div className="text-area">
                         <textarea
                             name="draftBio"
                             onChange={e => this.handleChange(e)}
-                        />
-                        <button onClick={e => this.submit()}>Save</button>
+                        >{this.props.bio}</textarea>
+                        <div>
+                        <button className="bio-btn" onClick={e => this.submit()}>Save</button>
+                        </div>
                     </div>
                 )}
                 {!this.props.bio && !this.state.editing && (
-                    <button
+                    <button className="bio-btn"
                         onClick={e =>
                             this.setState({
                                 editing: true

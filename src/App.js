@@ -33,18 +33,23 @@ export default class App extends React.Component {
             <div className="wraps-all">
                 <BrowserRouter>
                     <header>
-                        <h1 className="brief-me" id="small-logo">
+                        <h1 id="small-logo">
                             Brief.me
                         </h1>
-                        <Link to={"/users"} id="nav-link">
-                            Find friends
-                        </Link>
-                        <Link to={"/friends"} id="nav-link">
-                            Friend requests
-                        </Link>
-                        <Link to={"/"} id="nav-link">
-                            Home
-                        </Link>
+                        <div className="nav-container">
+                            <Link to={"/users"} id="nav-link">
+                                Search
+                            </Link>
+                            <Link to={"/friends"} id="nav-link">
+                                Friend requests
+                            </Link>
+                            <Link to={"/"} id="nav-link">
+                                My profile
+                            </Link>
+                            <a id="nav-link" href="/logout">
+                                Log out
+                            </a>
+                        </div>
                         <Avatar
                             image={this.state.image}
                             first={this.state.first}
@@ -57,7 +62,7 @@ export default class App extends React.Component {
                         />
                     </header>
 
-                    <section className="main-container">
+                    <section>
                         <div>
                             <Route
                                 exact
