@@ -44,17 +44,17 @@ export default function FindPeople() {
             />
             {users &&
                 users.map(user => (
-                    <div key={user.id}>
+                    <div key={user.id} className="find-people-container">
                         <Link to={`/user/${user.id}`}>
                             <img
                                 className="other-avatar"
                                 src={user.image}
                                 alt={`${user.first} ${user.last}`}
                             />
-                            <h2>
-                                {user.first} {user.last}
-                            </h2>
                         </Link>
+                        <h2>
+                            {user.first} {user.last}
+                        </h2>
                     </div>
                 ))}
         </div>

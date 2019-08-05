@@ -31,23 +31,33 @@ export default class App extends React.Component {
     render() {
         return (
             <div className="wraps-all">
-                <header>
-                    <h1 className="brief-me" id="small-logo">
-                        Brief.me
-                    </h1>
-                    <Avatar
-                        image={this.state.image}
-                        first={this.state.first}
-                        last={this.state.last}
-                        onClick={() =>
-                            this.setState({
-                                uploaderIsVisible: true
-                            })
-                        }
-                    />
-                </header>
-                <section className="main-container">
-                    <BrowserRouter>
+                <BrowserRouter>
+                    <header>
+                        <h1 className="brief-me" id="small-logo">
+                            Brief.me
+                        </h1>
+                        <Link to={"/users"} id="nav-link">
+                            Find friends
+                        </Link>
+                        <Link to={"/friends"} id="nav-link">
+                            Friend requests
+                        </Link>
+                        <Link to={"/"} id="nav-link">
+                            Home
+                        </Link>
+                        <Avatar
+                            image={this.state.image}
+                            first={this.state.first}
+                            last={this.state.last}
+                            onClick={() =>
+                                this.setState({
+                                    uploaderIsVisible: true
+                                })
+                            }
+                        />
+                    </header>
+
+                    <section className="main-container">
                         <div>
                             <Route
                                 exact
@@ -102,24 +112,24 @@ export default class App extends React.Component {
                                 render={props => <Friends />}
                             />
                         </div>
-                    </BrowserRouter>
 
-                    {this.state.uploaderIsVisible && (
-                        <Uploader
-                            setImg={data =>
-                                this.setState({
-                                    image: data,
-                                    uploaderIsVisible: false
-                                })
-                            }
-                            closeUploader={() =>
-                                this.setState({
-                                    uploaderIsVisible: false
-                                })
-                            }
-                        />
-                    )}
-                </section>
+                        {this.state.uploaderIsVisible && (
+                            <Uploader
+                                setImg={data =>
+                                    this.setState({
+                                        image: data,
+                                        uploaderIsVisible: false
+                                    })
+                                }
+                                closeUploader={() =>
+                                    this.setState({
+                                        uploaderIsVisible: false
+                                    })
+                                }
+                            />
+                        )}
+                    </section>
+                </BrowserRouter>
             </div>
         );
     }

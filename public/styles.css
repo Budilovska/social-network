@@ -41,6 +41,7 @@ background-image: url(/logo-giphy.gif);
 
 #small-logo {
     font-size: 3rem;
+    float: left;
 }
 
 .welcome-fields {
@@ -128,17 +129,14 @@ input {
 }
 
 .avatar {
-    width: 7rem;
+    width: 6.5rem;
+    object-fit: cover;
     float: right;
 }
 
 header {
     border: 2px solid pink;
-    height: 10rem;
-    display: flex;
-    flex-direction: row;
-    align-content: space-between;
-
+    height: 7rem;
 }
 
 .main-container {
@@ -148,4 +146,50 @@ header {
 .profile-avatar img {
     float: left;
     width: 17rem;
+}
+
+.other-avatar {
+    width: 10rem;
+    height: 10rem;
+    object-fit: cover;
+}
+
+#nav-link {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    margin: 0 15px;
+    text-decoration: none;
+    position: relative;
+    color: black;
+}
+
+
+
+#nav-link:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  background-color: #000;
+  visibility: hidden;
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  -webkit-transition: all 0.3s ease-in-out 0s;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+#nav-link:hover:before {
+  visibility: visible;
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);
+}
+
+.find-people-container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 2rem;
+    /* box-shadow: 0 0 4px gray; */
 }
