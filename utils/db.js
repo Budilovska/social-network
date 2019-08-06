@@ -83,3 +83,16 @@ exports.getFriendsList = function(id) {
         [id]
     );
 };
+
+exports.addMessage = function(message, sender_id) {
+    return db.query(
+        "INSERT INTO chats (message, sender_id) VALUES ($1, $2) RETURNING *",
+        [message, sender_id]
+    );
+};
+
+exports.lastTenMessages = function() {
+    return db.query(
+        "SELECT chats.id, sender_id, chats.message, chats.created_at, users.first, users.last, users.image FROM chats LEFT JOIN users ON users.id = chats.sender_id ORDER BY chats.id DESC LIMIT 10"
+    );
+};

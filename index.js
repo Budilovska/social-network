@@ -7,10 +7,11 @@ const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
 const csurf = require("csurf");
 //----------------------socket.io--------------------------------
-const server = require('http').Server(app);
-const io = require('socket.io')(server, { origins: 'localhost:8080' });
+//this has to happen after const app = express() line
+const server = require("http").Server(app);
+const io = require("socket.io")(server, { origins: "localhost:8080" });
 
-//------------------------has to be above the routes, handles file uploads
+//-------------has to be above the routes, handling file uploads
 const multer = require("multer");
 const uidSafe = require("uid-safe");
 const path = require("path");
@@ -23,12 +24,23 @@ app.use(express.static("./public"));
 app.use(bodyParser.json());
 app.use(compression());
 
-app.use(
-    cookieSession({
-        secret: `I'm always hungry.`,
-        maxAge: 1000 * 60 * 60 * 24 * 14 //in two weeks cookie will be deleted
-    })
-);
+//----------------------- cookies ----------------------------------
+const cookieSessionMiddleware = cookieSession({
+    secret: `I'm always hungry.`,
+    maxAge: 1000 * 60 * 60 * 24 * 90
+});
+
+app.use(cookieSessionMiddleware);
+io.use(function(socket, next) {
+    cookieSessionMiddleware(socket.request, socket.request.res, next);
+});
+
+// app.use(
+//     cookieSession({
+//         secret: `I'm always hungry.`,
+//         maxAge: 1000 * 60 * 60 * 24 * 14 //in two weeks cookie will be deleted
+//     })
+// );
 
 app.use(csurf());
 
@@ -277,27 +289,39 @@ app.get("*", function(req, res) {
 // });
 
 server.listen(8080, function() {
-    console.log("I'm listening")
+    console.log("I'm listening");
 });
 
-//location.href = is the classic way to relocate in the browser
-//
+//----------------- socket.io / chat --------------------------------
 
 //we pass to this function an object represents a connection between me and client
-io.on('connection', socket => {
-    console.log(`A socket with the id ${socket.id} just connected.`)
+io.on("connection", async socket => {
+    console.log(`A socket with the id ${socket.id} just connected.`);
 
-//     socket.emit('greeting', {
-//         message: 'hey there'});
-// //when seding message we emit, when listening to the message we do on.
-//
-//     socket.on('niceToBeHere', payload =>
-//         console.log(payload)
-//     );
-// //io sends message to everyone whos connected
-//     io.emit('newPlayer', {});
+    if (!socket.request.session.userId) {
+        return socket.disconnect(true);
+    }
 
-    socket.on('disconnect', () => {
-    console.log(`A socket with the id ${socket.id} just disconnected.`)
-});
+    //here we're grabbing their userId
+    let userId = socket.request.session.userId;
+
+    const result = await db.lastTenMessages();
+    // console.log("last 10 messages", result.rows);
+    io.emit("chatMessages", result.rows);
+
+    socket.on("new chat message", async msg => {
+        console.log(`message is: ${msg} from ${userId}`);
+        const message = await db.addMessage(msg, userId);
+        const user = await db.getUserInfo(userId);
+        // console.log(message.rows[0]);
+        // console.log("user", user.rows[0]);
+        const result = { ...message.rows[0], ...user.rows[0] };
+        console.log("result", result);
+
+        io.sockets.emit("newChatMessage", result);
+    });
+
+    socket.on("disconnect", () => {
+        console.log(`A socket with the id ${socket.id} just disconnected.`);
+    });
 });

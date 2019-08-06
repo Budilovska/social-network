@@ -8,6 +8,7 @@ import reduxPromise from "redux-promise";
 import { composeWithDevTools } from "redux-devtools-extension";
 import reducer from "./reducers";
 import * as socket from './socket';
+import { init } from './socket';
 
 const store = createStore(
     reducer,
@@ -20,6 +21,8 @@ if (location.pathname == "/welcome") {
     //user is logged out
     elem = <Welcome />;
 } else {
+    //initializing socket and passing it redux store:
+    init(store);
     elem = (
         <Provider store={store}>
             <App />

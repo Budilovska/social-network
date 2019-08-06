@@ -7,22 +7,33 @@ export default class Bioeditor extends React.Component {
         this.state = {
             editing: false
         };
+        this.clickedEdit = this.clickedEdit.bind(this);
     }
 
     //------------------- getting textarea value ------------------
     handleChange(e) {
         //take value of inpiut fields and attach it as a property of the component:
-        this.setState({
-            [e.target.name]: e.target.value
-        });
+        // console.log("e", e.target);
+        this.bio = e.target.value;
+        // this.setState({
+        //     [e.target.name]: e.target.value
+        // });
     }
     //------------------- clicked save bio -----------------------
     async submit() {
+        console.log("state", this.state);
         try {
             const { data } = await axios.post("/bio", {
-                draftBio: this.state.draftBio
+                draftBio: this.bio
             });
             console.log("data", data);
+            // if (!data) {
+            //     this.props.setBio(this.props.bio);
+            //     this.setState({
+            //         editing: false
+            //     });
+            // }
+
             this.props.setBio(data);
             this.setState({
                 editing: false
@@ -32,19 +43,22 @@ export default class Bioeditor extends React.Component {
         }
     }
 
+    clickedEdit() {
+        if (!this.bio) {
+            this.bio = this.props.bio;
+        }
+        this.setState({
+            editing: true
+        });
+    }
+
     render() {
         return (
             <div>
                 {this.props.bio && !this.state.editing && (
                     <div>
                         <p className="bio-text">{this.props.bio}</p>
-                        <button className="bio-btn"
-                            onClick={e =>
-                                this.setState({
-                                    editing: true
-                                })
-                            }
-                        >
+                        <button className="bio-btn" onClick={this.clickedEdit}>
                             Edit bio
                         </button>
                     </div>
@@ -53,16 +67,23 @@ export default class Bioeditor extends React.Component {
                 {this.state.editing && (
                     <div className="text-area">
                         <textarea
+                            defaultValue={this.props.bio}
                             name="draftBio"
                             onChange={e => this.handleChange(e)}
-                        >{this.props.bio}</textarea>
+                        />
                         <div>
-                        <button className="bio-btn" onClick={e => this.submit()}>Save</button>
+                            <button
+                                className="bio-btn"
+                                onClick={e => this.submit()}
+                            >
+                                Save
+                            </button>
                         </div>
                     </div>
                 )}
                 {!this.props.bio && !this.state.editing && (
-                    <button className="bio-btn"
+                    <button
+                        className="bio-btn"
                         onClick={e =>
                             this.setState({
                                 editing: true

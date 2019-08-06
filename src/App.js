@@ -7,6 +7,7 @@ import Bioeditor from "./bioeditor";
 import OtherProfile from "./otherProfile";
 import FindPeople from "./findPeople";
 import Friends from "./friends";
+import { Chat } from "./chat";
 import { Route, BrowserRouter, Link } from "react-router-dom";
 
 export default class App extends React.Component {
@@ -33,9 +34,7 @@ export default class App extends React.Component {
             <div className="wraps-all">
                 <BrowserRouter>
                     <header>
-                        <h1 id="small-logo">
-                            Brief.me
-                        </h1>
+                        <h1 id="small-logo">Brief.me</h1>
                         <div className="nav-container">
                             <Link to={"/users"} id="nav-link">
                                 Search
@@ -116,6 +115,7 @@ export default class App extends React.Component {
                                 path="/friends"
                                 render={props => <Friends />}
                             />
+                            <Route path="/chat" render={props => <Chat />} />
                         </div>
 
                         {this.state.uploaderIsVisible && (

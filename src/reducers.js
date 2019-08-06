@@ -32,5 +32,19 @@ export default function(state = {}, action) {
             })
         };
     }
+
+    if (action.type == "NEW_CHAT_MESSAGE") {
+        state = {
+            ...state,
+            message: [...state.message, action.message]
+        };
+    }
+
+    if (action.type == "CHAT_MESSAGES") {
+        state = {
+            ...state,
+            message: action.message.reverse()
+        };
+    }
     return state;
 }

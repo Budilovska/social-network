@@ -292,7 +292,7 @@ textarea {
     margin-right: 2rem;
     width: 90%;
     border-top: 2px solid magenta;
-    overflow-y: scroll;
+    overflow-x: scroll;
 }
 
 .friend-text {
@@ -337,3 +337,55 @@ textarea {
   border: none;
   width: 100%;
 } */
+
+.chat-container {
+    height: 400px;
+    width: 500px;
+    overflow-y: scroll;
+}
+
+.chat-box {
+    display: grid;
+    grid-template-columns: 4rem 10rem 1fr;
+    height: 4rem;
+    width: inherit;
+    justify-content: center;
+}
+
+.chat-img {
+    grid-column: 1/2;
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 3px;
+}
+
+.chat-name {
+    grid-column: 2/3;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    height: 3rem;
+    background-color: #feffea;
+    border-radius: 2px;
+    padding-top: 0.7rem;
+}
+
+.post_time {
+    font-family: 'Roboto', sans-serif;
+    font-size: 8px;
+    background-color: #feffea;
+    padding-top: 0.2rem;
+}
+
+.message {
+    height: 3rem;
+    background-color: #feffea;
+    border-radius: 2px;
+    padding-top: 0.4rem;
+}
+
+.chat-message {
+    grid-column: 3/4;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    background-color: #feffea;
+}
