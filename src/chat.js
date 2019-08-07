@@ -59,6 +59,7 @@ export function Chat() {
                     ))}
             </div>
             <textarea
+                className="chat-textarea"
                 placeholder="Add your message here"
                 onKeyDown={keyCheck}
             />

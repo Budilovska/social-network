@@ -96,3 +96,17 @@ exports.lastTenMessages = function() {
         "SELECT chats.id, sender_id, chats.message, chats.created_at, users.first, users.last, users.image FROM chats LEFT JOIN users ON users.id = chats.sender_id ORDER BY chats.id DESC LIMIT 10"
     );
 };
+
+exports.addPrivateMessage = function(message, sender, receiver) {
+    return db.query(
+        "INSERT INTO private (message, sender_id, receiver_id) VALUES ($1, $2, $3) RETURNING *",
+        [message, sender, receiver]
+    );
+};
+
+exports.getReceiver = function(id) {
+    return db.query(
+        "SELECT first AS receiver_first, last AS receiver_last, image AS receiver_image FROM users WHERE users.id=$1",
+        [id]
+    );
+};

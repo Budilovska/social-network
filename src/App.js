@@ -126,7 +126,13 @@ export default class App extends React.Component {
                             />
                             <Route
                                 path="/chat/:id"
-                                render={props => <PrivateChat />}
+                                render={props => (
+                                    <PrivateChat
+                                        key={props.match.url}
+                                        match={props.match}
+                                        history={props.history}
+                                    />
+                                )}
                             />
                         </div>
 

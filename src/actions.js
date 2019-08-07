@@ -40,14 +40,17 @@ export function newChatMessage(data) {
 }
 
 export function chatMessages(data) {
-    console.log("10 messages data", data);
+    // console.log("10 messages data", data);
     return {
         type: "CHAT_MESSAGES",
         message: data
     };
 }
 
-// type: "NEW_CHAT_MESSAGE",
-// message: data.message,
-// sender: data.sender_id,
-// created_at: data.sender_id
+export function newPrivateMessage(data) {
+    console.log("new private message:", data);
+    return {
+        type: "NEW_PRIVATE_MESSAGE",
+        pm: data
+    };
+}

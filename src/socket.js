@@ -1,5 +1,5 @@
 import * as io from "socket.io-client";
-import { chatMessages, newChatMessage } from "./actions";
+import { chatMessages, newChatMessage, newPrivateMessage } from "./actions";
 
 export let socket;
 
@@ -12,6 +12,11 @@ export const init = store => {
         );
 
         socket.on("chatMessages", data => store.dispatch(chatMessages(data)));
+
+        socket.on("newPrivateMessage", data => {
+            store.dispatch(newPrivateMessage(data));
+            console.log("happened");
+        });
     }
 };
 

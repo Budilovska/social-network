@@ -283,7 +283,6 @@ app.get("*", function(req, res) {
         res.sendFile(__dirname + "/index.html");
     }
 });
-//-----------------------------------------------------------------
 
 // app.listen(8080, function() {
 //     console.log("I'm listening.");
@@ -294,7 +293,7 @@ server.listen(8080, function() {
 });
 
 //----------------- socket.io / chat --------------------------------
-
+const usersConnectedNow = [];
 //we pass to this function an object represents a connection between me and client
 io.on("connection", async socket => {
     console.log(`A socket with the id ${socket.id} just connected.`);
@@ -306,6 +305,15 @@ io.on("connection", async socket => {
     //here we're grabbing their userId
     let userId = socket.request.session.userId;
 
+    const newUserConnected = {
+        userid: userId,
+        [userId]: socket.id
+    };
+
+    usersConnectedNow.push(newUserConnected);
+
+    console.log("connected users:", usersConnectedNow);
+
     const result = await db.lastTenMessages();
     result.rows.forEach(i => {
         i.created_at = moment(i.created_at, moment.ISO_8601).fromNow();
@@ -314,7 +322,7 @@ io.on("connection", async socket => {
     io.emit("chatMessages", result.rows);
 
     socket.on("new chat message", async msg => {
-        console.log(`message is: ${msg} from ${userId}`);
+        // console.log(`message is: ${msg} from ${userId}`);
         const message = await db.addMessage(msg, userId);
         const user = await db.getUserInfo(userId);
         message.rows[0].created_at = moment(
@@ -328,7 +336,40 @@ io.on("connection", async socket => {
         io.sockets.emit("newChatMessage", result);
     });
 
+    //--------------------- private messages -------------------------
+
+    // const lastTenPM = await db.lastTenPM();
+
+    socket.on("private message", async (msg, id) => {
+        console.log(
+            `private message to ${id.receiver_id} from ${userId} is: ${msg}`
+        );
+        const privateMessage = await db.addPrivateMessage(
+            msg,
+            userId,
+            id.receiver_id
+        );
+        const sender = await db.getUserInfo(userId);
+        const receiver = await db.getReceiver(id.receiver_id);
+        console.log("receiver", receiver.rows[0]);
+
+        const dataForPm = { ...privateMessage.rows[0], ...sender.rows[0] };
+        console.log("dataForPm", dataForPm);
+
+        let currentUser = usersConnectedNow.filter(
+            i => i.userid == id.receiver_id
+        );
+
+        // console.log("cur user", currentUser[0][id.receiver_id]);
+        let socketIdForPM = currentUser[0][id.receiver_id];
+        console.log("socketIdForPrivateMessage", socketIdForPM);
+        io.to(socketIdForPM).emit("newPrivateMessage", dataForPm);
+    });
+
     socket.on("disconnect", () => {
         console.log(`A socket with the id ${socket.id} just disconnected.`);
+        // console.log("connected users:", usersConnectedNow);
+        const socketToRemove = socket.id;
+        console.log("socketToRemove:", socketToRemove);
     });
 });

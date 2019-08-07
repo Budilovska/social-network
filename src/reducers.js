@@ -46,5 +46,16 @@ export default function(state = {}, action) {
             message: action.message.reverse()
         };
     }
+
+    if (action.type == "NEW_PRIVATE_MESSAGE") {
+        state = {
+            ...state
+        };
+        return {
+            ...state,
+            pm: state.pm ? [...state.pm, action.pm] : [action.pm]
+        };
+    }
+
     return state;
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "./axios";
 import FriendButton from "./friendButton";
+import { Link } from "react-router-dom";
 
 export default class OtherProfile extends React.Component {
     constructor(props) {
@@ -37,20 +38,26 @@ export default class OtherProfile extends React.Component {
             <div>
                 {!this.state.noUser ? (
                     <div className="profile-container">
-                    <div className="profile-avatar">
-                        <img
-                            src={this.state.image}
-                            alt={`${this.state.first} ${this.state.last}`}
-                        />
+                        <div className="profile-avatar">
+                            <img
+                                src={this.state.image}
+                                alt={`${this.state.first} ${this.state.last}`}
+                            />
                         </div>
                         <div>
-                        <h2 className="profile-name">
-                            {this.state.first} {this.state.last}
-                        </h2>
-                        <p className="bio-text">{this.state.bio}</p>
-                        <FriendButton
-                            otherProfileId={this.props.match.params.id}
-                        />
+                            <h2 className="profile-name">
+                                {this.state.first} {this.state.last}
+                            </h2>
+                            <p className="bio-text">{this.state.bio}</p>
+                            <Link
+                                className="link-to-chat"
+                                to={`/chat/${this.props.match.params.id}`}
+                            >
+                                Chat
+                            </Link>
+                            <FriendButton
+                                otherProfileId={this.props.match.params.id}
+                            />
                         </div>
                     </div>
                 ) : (
