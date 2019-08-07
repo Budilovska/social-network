@@ -8,6 +8,7 @@ import OtherProfile from "./otherProfile";
 import FindPeople from "./findPeople";
 import Friends from "./friends";
 import { Chat } from "./chat";
+import { PrivateChat } from "./privateChat";
 import { Route, BrowserRouter, Link } from "react-router-dom";
 
 export default class App extends React.Component {
@@ -36,6 +37,9 @@ export default class App extends React.Component {
                     <header>
                         <h1 id="small-logo">Brief.me</h1>
                         <div className="nav-container">
+                            <Link to={"/chat"} id="nav-link">
+                                Chat
+                            </Link>
                             <Link to={"/users"} id="nav-link">
                                 Search
                             </Link>
@@ -115,7 +119,15 @@ export default class App extends React.Component {
                                 path="/friends"
                                 render={props => <Friends />}
                             />
-                            <Route path="/chat" render={props => <Chat />} />
+                            <Route
+                                exact
+                                path="/chat"
+                                render={props => <Chat />}
+                            />
+                            <Route
+                                path="/chat/:id"
+                                render={props => <PrivateChat />}
+                            />
                         </div>
 
                         {this.state.uploaderIsVisible && (

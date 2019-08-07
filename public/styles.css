@@ -381,6 +381,7 @@ textarea {
     background-color: #feffea;
     border-radius: 2px;
     padding-top: 0.4rem;
+    overflow-y: scroll;
 }
 
 .chat-message {

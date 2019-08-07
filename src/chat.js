@@ -23,14 +23,12 @@ export function Chat() {
     ); //when smth here changes - we need to check
 
     const keyCheck = e => {
-        console.log("e.target.value", e.target.value);
+        // console.log("e.target.value", e.target.value);
         // console.log("e.key", e.key);
-        if (e.key == "Enter") {
+        if (e.key == "Enter" && e.target.value !== "") {
             e.preventDefault(); //prevents jump to the next line
             // console.log("Enter was clicked");
-
             socket.emit("new chat message", e.target.value);
-
             //cleaning inp field:
             e.target.value = "";
         }
@@ -48,14 +46,14 @@ export function Chat() {
                                 src={msg.image}
                                 alt={`${msg.first} ${msg.last}`}
                             />
-                            <h2 className="chat-name">
-                                {msg.first} {msg.last}
-                            </h2>
+                            <Link to={`/chat/${msg.sender_id}`}>
+                                <h2 className="chat-name">
+                                    {msg.first} {msg.last}
+                                </h2>
+                            </Link>
                             <div className="message">
                                 <p className="chat-message">{msg.message}</p>
-                                <p className="post_time">
-                                    published at {msg.created_at}
-                                </p>
+                                <p className="post_time">{msg.created_at}</p>
                             </div>
                         </div>
                     ))}

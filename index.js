@@ -6,6 +6,7 @@ const bc = require("./utils/bc");
 const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
 const csurf = require("csurf");
+const moment = require("moment");
 //----------------------socket.io--------------------------------
 //this has to happen after const app = express() line
 const server = require("http").Server(app);
@@ -306,17 +307,23 @@ io.on("connection", async socket => {
     let userId = socket.request.session.userId;
 
     const result = await db.lastTenMessages();
-    // console.log("last 10 messages", result.rows);
+    result.rows.forEach(i => {
+        i.created_at = moment(i.created_at, moment.ISO_8601).fromNow();
+    });
+
     io.emit("chatMessages", result.rows);
 
     socket.on("new chat message", async msg => {
         console.log(`message is: ${msg} from ${userId}`);
         const message = await db.addMessage(msg, userId);
         const user = await db.getUserInfo(userId);
-        // console.log(message.rows[0]);
-        // console.log("user", user.rows[0]);
+        message.rows[0].created_at = moment(
+            message.rows[0].created_at,
+            moment.ISO_8601
+        ).fromNow();
+
         const result = { ...message.rows[0], ...user.rows[0] };
-        console.log("result", result);
+        // console.log("result", result);
 
         io.sockets.emit("newChatMessage", result);
     });
