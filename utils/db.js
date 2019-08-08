@@ -104,9 +104,9 @@ exports.addPrivateMessage = function(message, sender, receiver) {
     );
 };
 
-exports.getReceiver = function(id) {
+exports.lastPrivateMessages = function(receiver_id, sender_id) {
     return db.query(
-        "SELECT first AS receiver_first, last AS receiver_last, image AS receiver_image FROM users WHERE users.id=$1",
-        [id]
+        "SELECT private.id, sender_id, receiver_id, private.message, private.created_at, users.first, users.last, users.image FROM private LEFT JOIN users ON users.id = private.sender_id WHERE (sender_id = $2 AND receiver_id = $1) OR (sender_id = $1 AND receiver_id = $2) ORDER BY private.id DESC LIMIT 20",
+        [receiver_id, sender_id]
     );
 };

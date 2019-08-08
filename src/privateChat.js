@@ -17,6 +17,8 @@ export function PrivateChat(props) {
 
         elemRef.current.scrollTop =
             elemRef.current.scrollHeight - elemRef.current.clientHeight;
+
+        socket.emit("get last private messages", { receiver_id: id });
     }, []);
 
     const keyCheck = e => {

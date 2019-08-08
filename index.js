@@ -10,7 +10,9 @@ const moment = require("moment");
 //----------------------socket.io--------------------------------
 //this has to happen after const app = express() line
 const server = require("http").Server(app);
-const io = require("socket.io")(server, { origins: "localhost:8080" });
+const io = require("socket.io")(server, {
+    origins: "localhost:8080 192.168.50.*:*"
+});
 
 //-------------has to be above the routes, handling file uploads
 const multer = require("multer");
@@ -293,7 +295,7 @@ server.listen(8080, function() {
 });
 
 //----------------- socket.io / chat --------------------------------
-const usersConnectedNow = [];
+let usersConnectedNow = [];
 //we pass to this function an object represents a connection between me and client
 io.on("connection", async socket => {
     console.log(`A socket with the id ${socket.id} just connected.`);
@@ -336,40 +338,76 @@ io.on("connection", async socket => {
         io.sockets.emit("newChatMessage", result);
     });
 
-    //--------------------- private messages -------------------------
+    //--------------------- last private messages -------------------------
 
-    // const lastTenPM = await db.lastTenPM();
+    socket.on("get last private messages", async id => {
+        const data = await db.lastPrivateMessages(id.receiver_id, userId);
+        console.log("last private messages", data.rows);
+
+        data.rows.forEach(msg => {
+            let receiverId = usersConnectedNow.filter(
+                msg => msg.userid == id.receiver_id
+            );
+
+            let senderId = usersConnectedNow.filter(i => i.userid == userId);
+
+            console.log("data about last private messages", msg);
+            receiverId.forEach(i =>
+                io.to(i[id.receiver_id]).emit("newPrivateMessage", msg)
+            );
+
+            senderId.forEach(i =>
+                io.to(i[userId]).emit("newPrivateMessage", msg)
+            );
+        });
+    });
+
+    //--------------------- private messages -------------------------
 
     socket.on("private message", async (msg, id) => {
         console.log(
             `private message to ${id.receiver_id} from ${userId} is: ${msg}`
         );
+
         const privateMessage = await db.addPrivateMessage(
             msg,
             userId,
             id.receiver_id
         );
         const sender = await db.getUserInfo(userId);
-        const receiver = await db.getReceiver(id.receiver_id);
-        console.log("receiver", receiver.rows[0]);
 
         const dataForPm = { ...privateMessage.rows[0], ...sender.rows[0] };
-        console.log("dataForPm", dataForPm);
 
-        let currentUser = usersConnectedNow.filter(
+        const newUserConnected = {
+            userid: userId,
+            [userId]: socket.id
+        };
+
+        let receiverId = usersConnectedNow.filter(
             i => i.userid == id.receiver_id
         );
 
-        // console.log("cur user", currentUser[0][id.receiver_id]);
-        let socketIdForPM = currentUser[0][id.receiver_id];
-        console.log("socketIdForPrivateMessage", socketIdForPM);
-        io.to(socketIdForPM).emit("newPrivateMessage", dataForPm);
+        let senderId = usersConnectedNow.filter(i => i.userid == userId);
+
+        console.log("data for pm", dataForPm);
+
+        receiverId.forEach(i =>
+            io.to(i[id.receiver_id]).emit("newPrivateMessage", dataForPm)
+        );
+
+        senderId.forEach(i =>
+            io.to(i[userId]).emit("newPrivateMessage", dataForPm)
+        );
     });
 
     socket.on("disconnect", () => {
         console.log(`A socket with the id ${socket.id} just disconnected.`);
-        // console.log("connected users:", usersConnectedNow);
-        const socketToRemove = socket.id;
-        console.log("socketToRemove:", socketToRemove);
+        const socketDisconnected = socket.id;
+        // console.log("socketToRemove:", socketDisconnected);
+        usersConnectedNow = usersConnectedNow.filter(
+            i => i[userId] !== socketDisconnected
+        );
+
+        console.log("new users that are connected", usersConnectedNow);
     });
 });
