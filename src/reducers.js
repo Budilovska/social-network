@@ -57,5 +57,12 @@ export default function(state = {}, action) {
         };
     }
 
+    if (action.type == "LAST_PRIVATE_MESSAGES") {
+        state = {
+            ...state,
+            pm: action.pm.reverse()
+        };
+    }
+
     return state;
 }

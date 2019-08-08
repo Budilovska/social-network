@@ -54,3 +54,11 @@ export function newPrivateMessage(data) {
         pm: data
     };
 }
+
+export function privateMessages(data) {
+    console.log("last private messages", data);
+    return {
+        type: "LAST_PRIVATE_MESSAGES",
+        pm: data
+    };
+}

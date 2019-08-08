@@ -5,19 +5,25 @@ import { Link } from "react-router-dom";
 
 export function PrivateChat(props) {
     const message = useSelector(state => state && state.pm);
+    // const lastPM = useSelector(state => state && state.pm);
     const id = props.match.params.id;
     // console.log("receiver_id is:", id);
     console.log("message", message);
 
     const elemRef = useRef();
 
+    useEffect(
+        () => {
+            // const id = props.match.params.id;
+            // console.log("receiver_id is:", id);
+
+            elemRef.current.scrollTop =
+                elemRef.current.scrollHeight - elemRef.current.clientHeight;
+        },
+        [message]
+    );
+
     useEffect(() => {
-        // const id = props.match.params.id;
-        // console.log("receiver_id is:", id);
-
-        elemRef.current.scrollTop =
-            elemRef.current.scrollHeight - elemRef.current.clientHeight;
-
         socket.emit("get last private messages", { receiver_id: id });
     }, []);
 
