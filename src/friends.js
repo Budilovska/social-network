@@ -25,7 +25,7 @@ export default function Friends() {
     return (
         <div className="friends-container">
             <div className="friends-list">
-            <p className="friend-text">My friend requests</p>
+            <p className="friend-text">Friend requests</p>
                 {wannabes &&
                     wannabes.map(friend => (
                         <div  className="single-friend" key={friend.id}>
@@ -48,7 +48,7 @@ export default function Friends() {
                     ))}
             </div>
             <div className="friends-list">
-            <p className="friend-text">My friends</p>
+            <p className="friend-text">Friends</p>
                 {friends &&
                     friends.map(friend => (
                         <div className="single-friend" key={friend.id}>

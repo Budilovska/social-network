@@ -35,28 +35,31 @@ export default function FindPeople() {
     );
 
     return (
-        <div>
-            {!val ? <p>Checkout who just joined!</p> : <p>Find people</p>}
+        <div className="search-container">
+            {!val ? <p className="search-text">Recently joined</p> : <p className="search-text">Find people</p>}
             <input
+                className="search-input"
                 name="finder"
                 placeholder="find people"
                 onChange={e => setValue(e.target.value)}
             />
+            <div className="find-people-container">
             {users &&
                 users.map(user => (
-                    <div key={user.id} className="find-people-container">
+                    <div key={user.id} className="single-person">
                         <Link to={`/user/${user.id}`}>
                             <img
-                                className="other-avatar"
+                                className="friends-avatar"
                                 src={user.image}
                                 alt={`${user.first} ${user.last}`}
                             />
                         </Link>
-                        <h2>
+                        <h2 className="friends-name">
                             {user.first} {user.last}
                         </h2>
                     </div>
                 ))}
+                </div>
         </div>
     );
 }

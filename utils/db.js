@@ -21,10 +21,7 @@ exports.getPassword = function(email) {
 };
 
 exports.getUserInfo = function(id) {
-    return db.query(
-        "SELECT first, last, image, bio FROM users WHERE users.id=$1",
-        [id]
-    );
+    return db.query("SELECT * FROM users WHERE users.id=$1", [id]);
 };
 
 exports.insertImage = function(url, id) {

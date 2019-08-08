@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "./axios";
 import FriendButton from "./friendButton";
+import { PrivateChat } from "./privateChat";
 import { Link } from "react-router-dom";
 
 export default class OtherProfile extends React.Component {

@@ -31,6 +31,7 @@ export default class App extends React.Component {
     }
 
     render() {
+        console.log("this.state", this.state);
         return (
             <div className="wraps-all">
                 <BrowserRouter>
@@ -131,6 +132,7 @@ export default class App extends React.Component {
                                         key={props.match.url}
                                         match={props.match}
                                         history={props.history}
+                                        userId={this.state.id}
                                     />
                                 )}
                             />

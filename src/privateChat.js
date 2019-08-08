@@ -39,7 +39,7 @@ export function PrivateChat(props) {
 
     return (
         <div className="chat">
-            <h1>Private chat</h1>
+        <h1 className="search-text">Private chat</h1>
             <div className="chat-container" ref={elemRef}>
                 {message &&
                     message.map(msg => (

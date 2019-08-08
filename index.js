@@ -342,27 +342,9 @@ io.on("connection", async socket => {
     //
     socket.on("get last private messages", async id => {
         const data = await db.lastPrivateMessages(id.receiver_id, userId);
-        console.log("last private messages", data.rows);
+        // console.log("last private messages", data.rows);
 
         io.emit("privateMessages", data.rows);
-
-        // data.rows.forEach(msg => {
-        //     let receiverId = usersConnectedNow.filter(
-        //         msg => msg.userid == id.receiver_id
-        //     );
-        //
-        // let senderId = usersConnectedNow.filter(i => i.userid == userId);
-        //
-        // console.log("data about last private messages", msg);
-        // receiverId.forEach(i =>
-        //     io.to(i[id.receiver_id]).emit("newPrivateMessage", msg)
-        // );
-        //
-        // senderId.forEach(i =>
-        //     io.to(i[userId]).emit("newPrivateMessage", msg)
-        // );
-
-        // });
     });
 
     //--------------------- private messages -------------------------
@@ -392,7 +374,7 @@ io.on("connection", async socket => {
 
         let senderId = usersConnectedNow.filter(i => i.userid == userId);
 
-        console.log("data for pm", dataForPm);
+        // console.log("data for pm", dataForPm);
 
         receiverId.forEach(i =>
             io.to(i[id.receiver_id]).emit("newPrivateMessage", dataForPm)
