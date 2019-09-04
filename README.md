@@ -1,4 +1,4 @@
-Social network built with React.js
+# Social network built with React.js
 
 ## Description 
 
