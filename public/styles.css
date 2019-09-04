@@ -2,6 +2,7 @@
     background-color: white;
     box-sizing: border-box;
     margin: 0;
+    outline: 0;
 }
 
 .welcome {
